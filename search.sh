@@ -2,7 +2,7 @@
 set -ueo pipefail
 
 CACHE_BUST_KEY=${CACHE_BUST_KEY:-}
-SERVER_URL=${SERVER_URL:-http://127.0.0.1:8000}
+SERVER_URL=${SERVER_URL:-http://85.61.137.47:9117}
 kind=${1:-}
 term=${2:-}
 provider=${3:-premiumize}
@@ -27,7 +27,7 @@ config=$(cat <<-EOF | jq -c . | base64 -w0
 	"debrid_service": "${provider}",
 	"debrid_api_key": "${debrid_api_key}",
 	"max_results": ${max_results},
-	"indexers": ["yts", "eztv", "kickasstorrents-ws", "thepiratebay", "therarbg", "torrentgalaxy"]
+	"indexers": ["Il Corsaro Nero", "ItaTorrents", "MIRCrew"]
 }
 
 EOF
