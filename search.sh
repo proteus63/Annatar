@@ -6,7 +6,7 @@ SERVER_URL=${SERVER_URL:-http://85.61.137.47:9117}
 kind=${1:-}
 term=${2:-}
 provider=${3:-premiumize}
-max_results=10
+max_results=5
 
 if [ -z "${kind}" ] || [ -z "${term}" ]; then
 	echo "Usage: $0 <kind> <term> [provider]"
