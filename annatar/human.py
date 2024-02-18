@@ -1,6 +1,7 @@
 import re
 
 import structlog
+from pydantic import BaseModel
 
 from annatar.jackett_models import SearchQuery
 

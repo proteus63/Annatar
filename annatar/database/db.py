@@ -61,11 +61,16 @@ async def unique_list_add(
 
 
 @REQUEST_DURATION.labels("ZRANGE").time()
-async def unique_list_get(name: str) -> list[str]:
+async def unique_list_get(
+    name: str,
+    min_score: int = 0,
+    max_score: int = -1,
+    limit: int = 50,
+) -> list[str]:
     try:
         return [
             i.decode("utf-8")  # type: ignore
-            for i in redis.zrevrange(  # type: ignore
+            for i in redis.zrange(  # type: ignore
                 name=name,
                 start=0,
                 end=-1,
@@ -75,6 +80,19 @@ async def unique_list_get(name: str) -> list[str]:
     except Exception as e:
         log.error("failed to get unique list", name=name, exc_info=e)
         return []
+
+
+async def unique_list_get_model(
+    name: str,
+    model: Type[T],
+    min_score: int = 0,
+    max_score: int = -1,
+    limit: int = 50,
+) -> list[T]:
+    return [
+        model.model_validate_json(i.decode("utf-8"))  # type: ignore
+        for i in await unique_list_get(name, min_score, max_score, limit)
+    ]
 
 
 async def set_model(key: str, model: BaseModel, ttl: timedelta) -> bool:
